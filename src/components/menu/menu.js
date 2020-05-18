@@ -13,6 +13,7 @@ import {
   openMenu,
   closeMenu,
   openFeaturesView,
+  openDebugView,
 } from '../../actions/app-actions';
 
 import type {AgileUserProfile} from '../../flow/Agile';
@@ -35,7 +36,8 @@ type Props = {
   agileProfile: AgileUserProfile,
   onOpen: () => any,
   onClose: () => any,
-  openFeaturesView: () => any
+  openFeaturesView: () => any,
+  openDebugView: () => any
 };
 
 type DefaultProps = {
@@ -84,7 +86,7 @@ export class Menu extends Component<Props, void> {
   };
 
   _renderMenu() {
-    const {auth, issueQuery, openFeaturesView} = this.props;
+    const {auth, issueQuery, openFeaturesView, openDebugView} = this.props;
     if (!auth) { //TODO: menu renders right after logOut by some reason.
       return null;
     }
@@ -120,6 +122,13 @@ export class Menu extends Component<Props, void> {
           </View>
 
           <View style={styles.menuFooter}>
+            <TouchableOpacity style={styles.linkText} onPress={openDebugView}>
+              <Text style={styles.linkText}>Show logs</Text>
+            </TouchableOpacity>
+
+            <View style={styles.spacer}/>
+            <View style={styles.spacer}/>
+
             <TouchableWithoutFeedback onPress={() => clicksToShowCounter(openFeaturesView, 'open features list')}>
               <Text style={styles.footerText}>YouTrack Mobile {VERSION_STRING}</Text>
             </TouchableWithoutFeedback>
@@ -175,6 +184,7 @@ const mapDispatchToProps = (dispatch) => {
     onOpen: () => dispatch(openMenu()),
     onClose: () => dispatch(closeMenu()),
     openFeaturesView: () => dispatch(openFeaturesView()),
+    openDebugView: () => dispatch(openDebugView())
   };
 };
 

@@ -74,6 +74,40 @@ exports[`<Menu/> Render should match a snapshot 1`] = `
             }
           }
         >
+          <TouchableOpacity
+            activeOpacity={0.2}
+            style={
+              Object {
+                "color": "#FE0082",
+                "fontSize": 12,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#FE0082",
+                  "fontSize": 12,
+                }
+              }
+            >
+              Show logs
+            </Text>
+          </TouchableOpacity>
+          <View
+            style={
+              Object {
+                "marginTop": 8,
+              }
+            }
+          />
+          <View
+            style={
+              Object {
+                "marginTop": 8,
+              }
+            }
+          />
           <TouchableWithoutFeedback
             onPress={[Function]}
           >
