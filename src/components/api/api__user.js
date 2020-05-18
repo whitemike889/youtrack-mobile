@@ -27,7 +27,7 @@ export default class UserAPI extends ApiBase {
   }
 
 
-  async getUser(userId?: string = 'me'): Promise<User> {
+  async getUser(userId: string = 'me'): Promise<User> {
     const queryString = UserAPI.createFieldsQuery([
       'id',
       {
@@ -40,7 +40,7 @@ export default class UserAPI extends ApiBase {
     return await this.makeAuthorizedRequest(`${this.apiUrl}/${userId}?${queryString}`);
   }
 
-  async updateUserAppearanceProfile(userId?: string = 'me', appearanceProfile: UserAppearanceProfile): Promise<User> {
+  async updateUserAppearanceProfile(userId: string = 'me', appearanceProfile: UserAppearanceProfile): Promise<User> {
     const queryString = UserAPI.createFieldsQuery(['naturalCommentsOrder']);
 
     return await this.makeAuthorizedRequest(
