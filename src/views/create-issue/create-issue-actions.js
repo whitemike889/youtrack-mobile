@@ -10,7 +10,8 @@ import log from '../../components/log/log';
 import attachFile from '../../components/attach-file/attach-file';
 import {getStorageState, flushStoragePart} from '../../components/storage/storage';
 import {notify, notifyError} from '../../components/notification/notification';
-import {resolveError, DEFAULT_ERROR_MESSAGE} from '../../components/error-message/error-resolver';
+import {resolveError} from '../../components/error/error-resolver';
+import {DEFAULT_ERROR_MESSAGE} from '../../components/error/error-codes';
 
 export const CATEGORY_NAME = 'Create issue view';
 

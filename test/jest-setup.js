@@ -43,5 +43,9 @@ jest.mock('bugsnag-react-native', () => {
 
 jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
 
+jest.mock('StatusBarIOS', () => ({
+  addListener: jest.fn()
+}));
+
 // react-native-notification mock
 mockReactNativeNotification();

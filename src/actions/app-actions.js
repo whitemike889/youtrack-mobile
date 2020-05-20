@@ -22,11 +22,13 @@ import {Linking, Platform} from 'react-native';
 import UrlParse from 'url-parse';
 import openByUrlDetector, {isOneOfServers} from '../components/open-url-handler/open-url-handler';
 import usage from '../components/usage/usage';
-import {notifyError, notify} from '../components/notification/notification';
+import {notify, notifyError} from '../components/notification/notification';
 import {loadConfig} from '../components/config/config';
 import Auth from '../components/auth/auth';
 import {loadAgileProfile} from '../views/agile-board/board-actions';
 import PushNotifications from '../components/push-notifications/push-notifications';
+import {CUSTOM_ERROR_MESSAGE, UNSUPPORTED_ERRORS} from '../components/error/error-codes';
+import {isUnsupportedFeatureError} from '../components/error/error-resolver';
 
 import type {AuthParams, CurrentUser} from '../components/auth/auth';
 import type {Permissions} from '../components/auth/auth__permissions';
@@ -35,16 +37,6 @@ import type {WorkTimeSettings} from '../flow/WorkTimeSettings';
 import type {StorageState} from '../components/storage/storage';
 import type RootState from '../reducers/app-reducer';
 import type {User, UserAppearanceProfile} from '../flow/User';
-
-export const REGISTRATION_ERRORS = [
-  'Not implemented',
-  'remote notifications are not supported in the simulator',
-  'YouTrack does not support push notifications'
-];
-export const ERROR_MESSAGE = {
-  FAIL: 'Push notifications registration failed',
-  NOT_SUPPORTED: 'Push notification is not supported: '
-};
 
 
 export function logOut() {
@@ -536,13 +528,11 @@ export function subscribeToPushNotifications() {
       setRegisteredForPush(true);
       log.info('Successfully registered for push notifications');
     } catch (err) {
-      const message = err?.message || err?.localizedDescription;
-
-      if (message && REGISTRATION_ERRORS.includes(message)) {
-        return log.warn(ERROR_MESSAGE.NOT_SUPPORTED + message);
+      if (isUnsupportedFeatureError(err)) {
+        return log.warn(UNSUPPORTED_ERRORS.PUSH_NOTIFICATION_NOT_SUPPORTED);
       }
 
-      notifyError(ERROR_MESSAGE.FAIL, err);
+      notifyError(CUSTOM_ERROR_MESSAGE.FAIL, err);
     }
   };
 }
